@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AutoShine Pro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logoBox">
+          <img src="logo.png" alt="AutoShine Pro" onerror="this.style.display='none'">
+        </div>
+        <div>
+          <div class="brandTitle">AutoShine <span>Pro</span></div>
+          <div class="brandSub">Premium Car Care • Maroc</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#products" class="navLink">Produits</a>
+        <a href="#support" class="navLink">Support</a>
+        <a class="pillBtn" href="#products">Commander</a>
+      </nav>
+    </header>
+
+    <header class="hero">
+      <div>
+        <h1>Produits premium pour l’entretien automobile</h1>
+        <p class="lead">Cliquez sur un produit pour ouvrir la photo + commander rapidement.</p>
+        <div id="statusLine" class="status">Chargement…</div>
+      </div>
+      <div class="heroCards">
+        <div class="miniCard">
+          <div class="miniIco">✓</div>
+          <div>
+            <div class="miniTitle">Commande rapide</div>
+            <div class="miniSub">Produit + quantité + infos client</div>
+          </div>
+        </div>
+        <div class="miniCard">
+          <div class="miniIco">★</div>
+          <div>
+            <div class="miniTitle">Premium</div>
+            <div class="miniSub">Finition luxe & durabilité</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="products" class="section">
+        <div class="secHead row">
+          <div>
+            <h2>Nos Produits</h2>
+            <p>Design luxe + achat rapide.</p>
+          </div>
+        </div>
+        <div id="productsList" class="productsGrid"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© AutoShine Pro</span>
+      <span class="muted">Powered by Vercel + Google Sheets</span>
+    </footer>
+  </div>
+
+  <div id="orderModal" class="modal" aria-hidden="true">
+    <div class="modalCard">
+      <button class="modalClose" id="closeModalBtn" aria-label="Fermer">✕</button>
+      <div class="modalGrid">
+        <div class="modalMedia">
+          <img id="modalImg" alt="Produit" />
+        </div>
+        <div class="modalBody">
+          <div class="modalTop">
+            <div>
+              <div id="modalTitle" class="modalTitle">Produit</div>
+              <div id="modalDesc" class="modalDesc"></div>
+            </div>
+            <div class="modalBadges">
+              <span id="modalPrice" class="badgeGold">— DH</span>
+              <span id="modalStock" class="badgeMuted">Stock: —</span>
+            </div>
+          </div>
+          <form id="orderForm" class="form">
+            <input type="hidden" id="productName" />
+            <input type="hidden" id="unitPrice" />
+            <div class="row2">
+              <div>
+                <label>Quantité</label>
+                <input id="quantity" type="number" min="1" value="1" required />
+              </div>
+              <div class="infoBox">
+                <div class="infoLine"><span>Total</span><strong id="totalInfo">—</strong></div>
+              </div>
+            </div>
+            <label>Nom complet</label>
+            <input id="fullName" type="text" placeholder="Nom Client" required />
+            <label>Téléphone</label>
+            <input id="phone" type="tel" placeholder="06xxxxxxxx" required />
+            <label>Ville</label>
+            <input id="city" type="text" placeholder="Casablanca" required />
+            <button id="submitBtn" class="btn" type="submit">Valider la commande</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
