@@ -1,180 +1,26 @@
-/* ================= AUTO-SHINE PRO: FULL SCRIPT (VERCEL VERSION) ================= */
+const WHATSAPP='212600000000';
+let products=[], cart=[], current=null;
+const demo=[
+{name:'Caftan Émeraude',category:'caftan',price:1890,desc:'Caftan marocain élégant aux finitions raffinées.',mark:'✦'},
+{name:'Takchita Royale',category:'takchita',price:2490,desc:'Takchita deux pièces pensée pour les grandes occasions.',mark:'◇'},
+{name:'Caftan Sable',category:'caftan',price:1590,desc:'Silhouette contemporaine et détails inspirés du patrimoine.',mark:'✧'},
+{name:'Parure Tradition',category:'accessoire',price:390,desc:'Accessoire doré pour compléter votre tenue.',mark:'❖'},
+{name:'Jellaba Signature',category:'accessoire',price:790,desc:'Jellaba marocaine chic et confortable.',mark:'✦'},
+{name:'Ceinture Mdamma',category:'accessoire',price:290,desc:'Détail précieux pour structurer la silhouette.',mark:'◇'},
+{name:'Takchita Ivoire',category:'takchita',price:2190,desc:'Une pièce lumineuse pour vos cérémonies.',mark:'✧'},
+{name:'Caftan Nuit',category:'caftan',price:1790,desc:'Élégance profonde et finitions couture.',mark:'❖'}];
 
-const orderModal = document.getElementById("orderModal");
-const modalCard = document.querySelector(".modalCard");
-const closeModalBtn = document.getElementById("closeModalBtn");
-const orderForm = document.getElementById("orderForm");
-const productsContainer = document.getElementById("productsList");
-const statusLine = document.getElementById("statusLine");
-
-const qtyInput = document.getElementById("quantity");
-const totalInfo = document.getElementById("totalInfo");
-
-let currentPrice = 0;
-let currentProductName = "";
-
-/* ===== 1. FETCH PRODUCTS FROM VERCEL API ===== */
-document.addEventListener("DOMContentLoaded", fetchProducts);
-
-async function fetchProducts() {
-  try {
-    const res = await fetch("/api/products");
-    const data = await res.json();
-
-    if (data.ok && data.products) {
-      renderProducts(data.products);
-    } else {
-      if (statusLine) statusLine.innerText = "Erreur: Impossible de charger les produits.";
-    }
-  } catch (err) {
-    console.error("Fetch error:", err);
-    if (statusLine) statusLine.innerText = "Erreur de connexion au serveur.";
-  }
-}
-
-/* ===== 2. RENDER PRODUCTS ON PAGE ===== */
-function renderProducts(products) {
-  if (!productsContainer) return;
-  productsContainer.innerHTML = "";
-  if (statusLine) statusLine.style.display = "none"; 
-
-  products.forEach(p => {
-    const name = p.Nom || p.Name || p.Produit || "Produit AutoShine";
-    const price = p.Prix || p.Price || 0;
-    const image = p.ImageURL || p.Image || p.Photo || "";
-    const desc = p.Description || p.Desc || "";
-    const stock = p.Stock || "Disponible";
-
-    const card = document.createElement("div");
-    card.className = "productCard"; 
-    card.style.cssText = "border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.4); text-align: center; cursor: pointer; transition: 0.3s;";
-    
-    card.innerHTML = `
-      <img src="${image}" alt="${name}" style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:15px; background:#1a1a1a;" onerror="this.src=''">
-      <h3 style="margin: 0 0 10px 0; color: #fff; font-size:18px;">${name}</h3>
-      <p style="color: #d6b35a; font-weight: bold; font-size: 16px; margin: 0 0 15px 0;">${price} DH</p>
-      <button style="width:100%; padding:10px; border-radius:8px; border:none; background: linear-gradient(90deg,#d6b35a,#2fd47e); color:#000; font-weight:bold; cursor:pointer;">Commander</button>
-    `;
-
-    card.addEventListener("click", () => {
-      openModalWithProduct({ name, price, image, desc, stock });
-    });
-
-    productsContainer.appendChild(card);
-  });
-}
-
-/* ===== 3. OPEN MODAL & SCROLL TO FORM ===== */
-function openModalWithProduct(product) {
-  currentProductName = product.name;
-  currentPrice = parseFloat(product.price) || 0;
-
-  document.getElementById("modalImg").src = product.image;
-  document.getElementById("modalTitle").innerText = product.name;
-  document.getElementById("modalDesc").innerText = product.desc;
-  document.getElementById("modalPrice").innerText = currentPrice + " DH";
-  document.getElementById("modalStock").innerText = "Stock: " + product.stock;
-
-  document.getElementById("productName").value = currentProductName;
-  document.getElementById("unitPrice").value = currentPrice;
-
-  if (qtyInput) qtyInput.value = 1;
-  updateTotal();
-
-  orderModal.classList.add("show");
-
-  setTimeout(() => {
-    const formArea = document.getElementById("orderForm");
-    const nameInput = document.getElementById("fullName");
-    if (formArea) {
-      formArea.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-    if (nameInput) {
-      nameInput.focus();
-    }
-  }, 150);
-}
-
-function closeModal() {
-  orderModal.classList.remove("show");
-}
-
-closeModalBtn?.addEventListener("click", (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  closeModal();
-});
-
-orderModal?.addEventListener("click", closeModal);
-modalCard?.addEventListener("click", (e) => e.stopPropagation());
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
-});
-
-/* ===== 4. CALCULATE TOTAL ===== */
-function updateTotal() {
-  if (!qtyInput || !totalInfo) return;
-  const qty = parseInt(qtyInput.value) || 1;
-  const total = qty * currentPrice;
-  totalInfo.innerText = total + " DH";
-}
-
-qtyInput?.addEventListener("input", updateTotal);
-
-/* ===== 5. FORM SUBMIT TO VERCEL API ===== */
-orderForm?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const fullName = document.getElementById("fullName")?.value.trim();
-  const phone = document.getElementById("phone")?.value.trim();
-  const city = document.getElementById("city")?.value.trim();
-  const quantity = parseInt(qtyInput?.value) || 1;
-  const total = quantity * currentPrice;
-
-  if (!fullName || !phone || !city) {
-    alert("المرجو إدخال جميع المعلومات");
-    return;
-  }
-
-  const submitBtn = document.getElementById("submitBtn");
-  const originalText = submitBtn.innerText;
-  submitBtn.innerText = "جاري الإرسال... ⏳";
-  submitBtn.disabled = true;
-
-  try {
-    const res = await fetch("/api/order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        fullName,
-        phone,
-        city,
-        quantity: quantity,
-        product: currentProductName,
-        price: currentPrice,
-        total: total,
-        orderId: "AS-" + Date.now()
-      })
-    });
-
-    const data = await res.json();
-
-    if (!data.ok) {
-      alert("فشل إرسال الطلب: " + (data.error || "تأكد من إعدادات Google Apps Script"));
-      console.error(data);
-      return;
-    }
-
-    alert("تم إرسال الطلب بنجاح ✅");
-    orderForm.reset();
-    closeModal();
-
-  } catch (err) {
-    console.error("Submit error:", err);
-    alert("خطأ في الاتصال بالخادم");
-  } finally {
-    submitBtn.innerText = originalText;
-    submitBtn.disabled = false;
-  }
-});
+function money(n){return Number(n).toLocaleString('fr-MA')+' DH'}
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function render(list=products){const el=document.getElementById('products');el.innerHTML=list.map((p,i)=>`<article class="product-card" data-i="${products.indexOf(p)}"><button class="quick">Voir la pièce</button><div class="product-img">${p.image?`<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}">`:`<span>${p.mark||'✦'}</span>`}</div><div class="product-info"><div class="product-cat">${escapeHtml(p.category)}</div><h3>${escapeHtml(p.name)}</h3><div class="product-price">${money(p.price)}</div></div></article>`).join('');el.querySelectorAll('.product-card').forEach(c=>c.onclick=()=>openProduct(products[c.dataset.i]))}
+async function load(){try{const r=await fetch('/api/products');const d=await r.json();if(d.ok&&d.products?.length)products=d.products.map(p=>({name:p.Nom||p.Name||p.Produit||'Pièce Maison SB',category:String(p.Categorie||p.Category||'caftan').toLowerCase(),price:Number(p.Prix||p.Price||0),desc:p.Description||p.Desc||'',image:p.ImageURL||p.Image||p.Photo||'',mark:'✦'}));else products=demo}catch(e){products=demo}render();}
+function openProduct(p){current=p;document.getElementById('modalCategory').textContent=p.category;document.getElementById('modalName').textContent=p.name;document.getElementById('modalDesc').textContent=p.desc;document.getElementById('modalPrice').textContent=money(p.price);document.getElementById('modalQty').value=1;document.getElementById('modalPhoto').innerHTML=p.image?`<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}">`:`<span>${p.mark||'✦'}</span>`;document.getElementById('productModal').classList.add('open')}
+function closeModal(){document.getElementById('productModal').classList.remove('open')}
+function updateCart(){document.getElementById('cartCount').textContent=cart.reduce((a,x)=>a+x.qty,0);document.getElementById('cartItems').innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><span>${escapeHtml(x.name)} × ${x.qty}</span><span>${money(x.price*x.qty)} <button class="remove" data-i="${i}">×</button></span></div>`).join(''):'<p style="color:#777;font-size:12px">Votre panier est vide.</p>';document.querySelectorAll('.remove').forEach(b=>b.onclick=()=>{cart.splice(Number(b.dataset.i),1);updateCart()});document.getElementById('cartTotal').textContent=money(cart.reduce((a,x)=>a+x.price*x.qty,0))}
+function openCart(){document.getElementById('cart').classList.add('open');document.getElementById('backdrop').classList.add('open')}
+function closeCart(){document.getElementById('cart').classList.remove('open');document.getElementById('backdrop').classList.remove('open')}
+document.getElementById('filters').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const f=b.dataset.filter;render(f==='all'?products:products.filter(p=>p.category.includes(f)))};
+document.getElementById('cartBtn').onclick=openCart;document.getElementById('closeCart').onclick=closeCart;document.getElementById('backdrop').onclick=closeCart;document.getElementById('closeModal').onclick=closeModal;document.getElementById('productModal').onclick=e=>{if(e.target.id==='productModal')closeModal()};
+document.getElementById('addModal').onclick=()=>{const qty=Math.max(1,Number(document.getElementById('modalQty').value)||1);const old=cart.find(x=>x.name===current.name);old?old.qty+=qty:cart.push({...current,qty});updateCart();closeModal();openCart()};
+document.getElementById('orderBtn').onclick=()=>{if(!cart.length)return alert('Votre panier est vide.');const lines=cart.map(x=>`• ${x.name} × ${x.qty} = ${money(x.price*x.qty)}`).join('%0A');const total=money(cart.reduce((a,x)=>a+x.price*x.qty,0));window.open(`https://wa.me/${WHATSAPP}?text=Bonjour Maison SB,%0AJe souhaite commander:%0A${lines}%0ATotal: ${total}%0AMerci.` ,'_blank')};
+document.getElementById('whatsappContact').href=`https://wa.me/${WHATSAPP}?text=Bonjour Maison SB, je souhaite avoir des informations sur vos caftans.`;load();updateCart();
