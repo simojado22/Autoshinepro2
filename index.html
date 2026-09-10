@@ -1,114 +1,24 @@
 <!doctype html>
 <html lang="fr" dir="ltr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AutoShine Pro</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Maison SB Caftan — caftans marocains, takchita et accessoires.">
+<title>Maison SB Caftan | Élégance Marocaine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="wrap">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logoBox">
-          <img src="logo.png" alt="AutoShine Pro" onerror="this.style.display='none'">
-        </div>
-        <div>
-          <div class="brandTitle">AutoShine <span>Pro</span></div>
-          <div class="brandSub">Premium Car Care • Maroc</div>
-        </div>
-      </div>
-      <nav class="nav">
-        <a href="#products" class="navLink">Produits</a>
-        <a href="#support" class="navLink">Support</a>
-        <a class="pillBtn" href="#products">Commander</a>
-      </nav>
-    </header>
-
-    <header class="hero">
-      <div>
-        <h1>Produits premium pour l’entretien automobile</h1>
-        <p class="lead">Cliquez sur un produit pour ouvrir la photo + commander rapidement.</p>
-        <div id="statusLine" class="status">Chargement…</div>
-      </div>
-      <div class="heroCards">
-        <div class="miniCard">
-          <div class="miniIco">✓</div>
-          <div>
-            <div class="miniTitle">Commande rapide</div>
-            <div class="miniSub">Produit + quantité + infos client</div>
-          </div>
-        </div>
-        <div class="miniCard">
-          <div class="miniIco">★</div>
-          <div>
-            <div class="miniTitle">Premium</div>
-            <div class="miniSub">Finition luxe & durabilité</div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <section id="products" class="section">
-        <div class="secHead row">
-          <div>
-            <h2>Nos Produits</h2>
-            <p>Design luxe + achat rapide.</p>
-          </div>
-        </div>
-        <div id="productsList" class="productsGrid"></div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <span>© AutoShine Pro</span>
-      <span class="muted">Powered by Vercel + Google Sheets</span>
-    </footer>
-  </div>
-
-  <div id="orderModal" class="modal" aria-hidden="true">
-    <div class="modalCard">
-      <button class="modalClose" id="closeModalBtn" aria-label="Fermer">✕</button>
-      <div class="modalGrid">
-        <div class="modalMedia">
-          <img id="modalImg" alt="Produit" />
-        </div>
-        <div class="modalBody">
-          <div class="modalTop">
-            <div>
-              <div id="modalTitle" class="modalTitle">Produit</div>
-              <div id="modalDesc" class="modalDesc"></div>
-            </div>
-            <div class="modalBadges">
-              <span id="modalPrice" class="badgeGold">— DH</span>
-              <span id="modalStock" class="badgeMuted">Stock: —</span>
-            </div>
-          </div>
-          <form id="orderForm" class="form">
-            <input type="hidden" id="productName" />
-            <input type="hidden" id="unitPrice" />
-            <div class="row2">
-              <div>
-                <label>Quantité</label>
-                <input id="quantity" type="number" min="1" value="1" required />
-              </div>
-              <div class="infoBox">
-                <div class="infoLine"><span>Total</span><strong id="totalInfo">—</strong></div>
-              </div>
-            </div>
-            <label>Nom complet</label>
-            <input id="fullName" type="text" placeholder="Nom Client" required />
-            <label>Téléphone</label>
-            <input id="phone" type="tel" placeholder="06xxxxxxxx" required />
-            <label>Ville</label>
-            <input id="city" type="text" placeholder="Casablanca" required />
-            <button id="submitBtn" class="btn" type="submit">Valider la commande</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+<div class="announcement">Livraison partout au Maroc · Paiement à la livraison · Service WhatsApp</div>
+<header class="header"><a class="brand" href="#top"><span class="brand-mark">SB</span><span><b>MAISON SB</b><small>CAFTAN · MOROCCAN COUTURE</small></span></a><nav><a href="#collection">Collection</a><a href="#about">Maison</a><a href="#contact">Contact</a><button class="cart-btn" id="cartBtn">Panier <span id="cartCount">0</span></button></nav></header>
+<main id="top">
+<section class="hero"><div class="hero-overlay"></div><div class="hero-content"><p class="eyebrow">L'art du caftan marocain</p><h1>L'élégance<br><em>héritée</em>, réinventée.</h1><p class="hero-text">Des pièces choisies avec soin, entre broderies traditionnelles, coupes contemporaines et détails précieux.</p><a class="gold-btn" href="#collection">Découvrir la collection</a></div><div class="hero-note">Collection 2026 <span>✦</span> Maison SB</div></section>
+<section class="intro" id="about"><p class="eyebrow">Maison SB</p><h2>Une signature marocaine<br><em>à chaque détail.</em></h2><p>Caftans, takchitas, jellabas et accessoires sélectionnés pour les femmes qui aiment porter la tradition avec une touche moderne.</p><div class="features"><span>✦ Sélection raffinée</span><span>✦ Qualité & finitions</span><span>✦ Livraison Maroc</span></div></section>
+<section class="collection" id="collection"><div class="section-head"><div><p class="eyebrow">La sélection</p><h2>Nos pièces <em>iconiques</em></h2></div><div class="filters" id="filters"><button class="active" data-filter="all">Tout</button><button data-filter="caftan">Caftans</button><button data-filter="takchita">Takchitas</button><button data-filter="accessoire">Accessoires</button></div></div><div class="product-grid" id="products"></div></section>
+<section class="editorial"><div class="editorial-image"></div><div class="editorial-copy"><p class="eyebrow">L'esprit Maison SB</p><h2>Le patrimoine marocain,<br><em>avec une allure d'aujourd'hui.</em></h2><p>Chaque pièce raconte une histoire : sfifa, aakad, broderies et silhouettes pensées pour les grandes occasions.</p><a class="text-link" href="#collection">Explorer la sélection →</a></div></section>
+<section class="contact" id="contact"><p class="eyebrow">Besoin d'aide ?</p><h2>Votre prochaine pièce<br><em>commence ici.</em></h2><p>Pour une taille, une couleur, une disponibilité ou une commande personnalisée, écrivez-nous directement.</p><a class="whatsapp" id="whatsappContact" href="#">WhatsApp · Nous contacter</a></section>
+</main>
+<footer><div class="footer-brand">MAISON SB CAFTAN</div><div>© 2026 Maison SB · Casablanca, Maroc</div><div>Instagram · WhatsApp</div></footer>
+<div class="drawer-backdrop" id="backdrop"></div><aside class="cart" id="cart"><button class="close" id="closeCart">×</button><p class="eyebrow">Votre sélection</p><h2>Panier</h2><div id="cartItems" class="cart-items"></div><div class="cart-total"><span>Total</span><strong id="cartTotal">0 DH</strong></div><button class="gold-btn full" id="orderBtn">Commander sur WhatsApp</button></aside>
+<div class="modal" id="productModal"><div class="modal-card"><button class="close" id="closeModal">×</button><div class="modal-photo" id="modalPhoto"></div><div class="modal-info"><p class="eyebrow" id="modalCategory"></p><h2 id="modalName"></h2><p id="modalDesc"></p><div class="modal-price" id="modalPrice"></div><label>Quantité <input id="modalQty" type="number" min="1" value="1"></label><button class="gold-btn full" id="addModal">Ajouter au panier</button></div></div></div>
+<script src="script.js"></script>
+</body></html>
